@@ -3,15 +3,23 @@ console.log('Hello World')
 
 document.addEventListener('DOMContentLoaded', function() {
 
-var emptyFields;
-
   var playerClasses = {
   'playerA':'red',
   'playerB': 'blue',
 };
   var currentPlayer;
+  	var emptyFields;
 
     initGame();
+
+  function displayRoundInformation() {
+  	var round = document.getElementById('round-info');
+
+  	round.className = playerClasses[currentPlayer];
+  	round.innerHTML = 'Round for '+ currentPlayer;
+
+  }
+
   
   function initGame() {
   	console.log('czy dziala');
@@ -26,6 +34,7 @@ var emptyFields;
     fields.forEach(field => {
     	field.className = '';
     })
+    displayRoundInformation();
   }
 
 
@@ -45,6 +54,8 @@ var emptyFields;
     this.removeEventListener('click', fieldClickHandler);
     
     emptyFields = emptyFields - 1;
+
+    displayRoundInformation();
 
 	checkWinner();
 
