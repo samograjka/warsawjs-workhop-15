@@ -3,6 +3,8 @@ console.log('Hello World')
 
 document.addEventListener('DOMContentLoaded', function() {
 
+	var resetButton = document.getElementById('reset-score');
+
   var playerClasses = {
   'playerA':'red',
   'playerB': 'blue',
@@ -10,7 +12,20 @@ document.addEventListener('DOMContentLoaded', function() {
   var currentPlayer;
   	var emptyFields;
 
+  var scores = {
+  	'playerA': 0,
+  	'playerB': 0
+  }
+
     initGame();
+
+    resetButton.addEventListener('click', function (){
+    	scores ['playerA'] = 0;
+    	scores ['playerB'] = 0;
+
+    	displayPlayerScore('playerA');
+    	displayPlayerScore('playerB');
+    });
 
   function displayRoundInformation() {
   	var round = document.getElementById('round-info');
@@ -18,6 +33,12 @@ document.addEventListener('DOMContentLoaded', function() {
   	round.className = playerClasses[currentPlayer];
   	round.innerHTML = 'Round for '+ currentPlayer;
 
+  }
+
+  function displayPlayerScore(player) {
+  	console.log(player)
+  	var score = document.getElementById(`${player}-score`);
+  	score.innerHTML = `${player} score: ${scores[player]}`;
   }
 
   
@@ -59,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	checkWinner();
 
+	displayPlayerScore(currentPlayer);
+
 
 	function checkWinner() {
 		var fields = document.querySelectorAll('.board > div');
@@ -79,6 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 		if (winningCombinations.includes ('redredred')) {
   		setTimeout (function(){
+  			scores.playerA = scores.playerA + 1;
+  			displayPlayerScore('playerA');
   			alert('Red wins!');
   			initGame();
   		}, 400)
@@ -87,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   	if (winningCombinations.includes ('blueblueblue')) {
   		setTimeout (function(){
+  			scores.playerB =  scores.playerB + 1;
+  			displayPlayerScore('playerB');
 			alert('Blue wins!');
   			initGame();
   		}, 400)
