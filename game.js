@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
   	'playerB': 0
   }
 
+  var names = {
+  	'playerA': 'playerA',
+  	'playerB': 'playerB'
+  }
+
     initGame();
 
     resetButton.addEventListener('click', function (){
@@ -26,6 +31,18 @@ document.addEventListener('DOMContentLoaded', function() {
     	displayPlayerScore('playerA');
     	displayPlayerScore('playerB');
     });
+
+    for (let player in names) {
+    	let renameButton = document.getElementById(`${player}-rename`);
+		renameButton.innerText = `Rename ${player}`;
+		renameButton.addEventListener('click', function () {
+			names[player] = prompt(`Rename ${player} to:`);
+			renameButton.innerText = `Rename ${names[player]}`;
+			displayRoundInformation();
+			displayPlayerScore('playerA');
+			displayPlayerScore('playerB');
+    })
+	}
 
   function displayRoundInformation() {
   	var round = document.getElementById('round-info');
